@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/machine": {
+      "name": "/machine",
+      "lambdaFunction": "machinefunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

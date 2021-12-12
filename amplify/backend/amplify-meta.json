@@ -1,0 +1,101 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-myapp-dev-220515-authRole",
+      "UnauthRoleArn": "arn:aws:iam::556097057770:role/amplify-myapp-dev-220515-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::556097057770:role/amplify-myapp-dev-220515-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-myapp-dev-220515-deployment",
+      "UnauthRoleName": "amplify-myapp-dev-220515-unauthRole",
+      "StackName": "amplify-myapp-dev-220515",
+      "StackId": "arn:aws:cloudformation:eu-central-1:556097057770:stack/amplify-myapp-dev-220515/2b442bd0-5862-11ec-bd47-02c6705ee94c",
+      "AmplifyAppId": "d2wudzp05l0n46"
+    }
+  },
+  "storage": {
+    "mydb": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-220515-deployment/amplify-cfn-templates/storage/mydb-cloudformation-template.json",
+        "logicalId": "storagemydb"
+      },
+      "lastPushTimeStamp": "2021-12-09T13:37:08.681Z",
+      "output": {
+        "PartitionKeyName": "id",
+        "Region": "eu-central-1",
+        "Arn": "arn:aws:dynamodb:eu-central-1:556097057770:table/machine-dev",
+        "StreamArn": "arn:aws:dynamodb:eu-central-1:556097057770:table/machine-dev/stream/2021-12-08T20:23:49.066",
+        "PartitionKeyType": "S",
+        "Name": "machine-dev"
+      },
+      "lastPushDirHash": "iv20SCxYTLhflfLlvvWOhztb6aU="
+    }
+  },
+  "function": {
+    "machinefunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "mydb",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2021-12-09T13:35:37.060Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2021-12-09T13:35:55.721Z",
+      "distZipFilename": "machinefunction-306a4c74593872705458-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-myapp-dev-220515-deployment",
+        "s3Key": "amplify-builds/machinefunction-306a4c74593872705458-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-220515-deployment/amplify-cfn-templates/function/machinefunction-cloudformation-template.json",
+        "logicalId": "functionmachinefunction"
+      },
+      "lastPushTimeStamp": "2021-12-09T13:37:08.764Z",
+      "output": {
+        "Region": "eu-central-1",
+        "Arn": "arn:aws:lambda:eu-central-1:556097057770:function:machinefunction-dev",
+        "Name": "machinefunction-dev",
+        "LambdaExecutionRole": "myappLambdaRole06e46611-dev"
+      },
+      "lastPushDirHash": "9iWMK1Z90eTuV4wLa4bjQuCqCb4=",
+      "lastDevBuildTimeStamp": "2021-12-08T21:04:41.660Z"
+    }
+  },
+  "api": {
+    "myapi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "machinefunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-220515-deployment/amplify-cfn-templates/api/myapi-cloudformation-template.json",
+        "logicalId": "apimyapi"
+      },
+      "lastPushTimeStamp": "2021-12-09T13:37:08.691Z",
+      "output": {
+        "ApiName": "myapi",
+        "RootUrl": "https://xao7zl5edg.execute-api.eu-central-1.amazonaws.com/dev",
+        "ApiId": "xao7zl5edg"
+      },
+      "lastPushDirHash": "Uij3lryFXGZnYNmdZiUtlJ68fYI="
+    }
+  }
+}

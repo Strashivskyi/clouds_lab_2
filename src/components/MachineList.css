@@ -19,6 +19,8 @@
 }
 .delete{
     text-align: center;
+    cursor: pointer; 
+
 }
 .internal-create-link{
     text-decoration: none;

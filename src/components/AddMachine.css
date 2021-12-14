@@ -1,0 +1,11 @@
+.form-group{
+    margin: 0px 400px;
+}
+.input-names{
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 20px;
+    color: rgb(61, 56, 56);
+}
+.inputs{
+    margin-bottom: 30px;
+}

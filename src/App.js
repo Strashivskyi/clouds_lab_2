@@ -1,60 +1,52 @@
-import { useState, useEffect } from 'react'
-import { API } from 'aws-amplify'
+import React, { useState, useEffect } from 'react';
+import { API } from 'aws-amplify';
+import "./styles.css";
+import './App.css';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'  
+import MachineList from './components/MachineList';
+import AddMachine from './components/AddMachine';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 function App() {
-
-    /*useEffect(() => {
-            await API.put('myapi', '/machine/54567c8c-c506-4248-a961-1cc35b5b0eaa', 
-            {
-                body: {
-                    name : 'sweets===nacks',
-                    address : 'Miami, FL'
-                }
-            }
-            )
-            
-            API.get('myapi', '/machine').then(data => {
-                setMachines(data.machine);
-            })
-            console.log(data)
-        
-
-        fetch('/machine').then(response =>
-            response.json().then(data => {
-                setMachines(data.machines);
-            })
-          );
-
-    }, [])
-    */
     const [textObj, setTextObj] = useState([]);
+    /*API.post('myapi', '/machine', { 
+      body: { 
+        name: 'Mch22', 
+        address: 'Miami FL', 
+      } 
+    })
+    */
+    /*API.del('myapi', `/machine/58b6e523-aa95-4e25-bed0-78c1d4137b7c`)*/
+    const data=API.get('myapi', `/machine`)
+    console.log(data)
+
 
     const fetchData = async () => {
-      try {
+        try {
+          const data = await API.get('myapi', '/machine');
+          console.log(data)
+          setTextObj(data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      useEffect(() => {
+        fetchData();
+      }, [
+        textObj
+      ]);
 
-
-        axios.get('http:/localhost:3000/machine').then(res => {
-                const data = res.data;
-                setTextObj(data);
-            })
-      } catch (error) {
-        console.log(error);
-      }
-  };
-  useEffect(() => {
-    fetchData();
-  }, [
-      textObj
-    ]);
+      return (
+        <Router>
+          <Routes>
+          <Route path="/" element={<MachineList />} />
+          <Route path="/add-machine" element={<AddMachine />} />
+          </Routes>
+        
+        </Router>
     
-    return <>
-    {textObj.map((obj) => (<>
-    <span style={{}}>
+      );
 
-TEXT{obj.name}
-</span>
-    </>
-    ))}
-    </>
 }
 
 export default App;

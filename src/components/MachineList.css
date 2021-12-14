@@ -1,0 +1,40 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.create-link{
+    cursor: pointer; 
+    display: flex;
+  justify-content: center;
+  align-items: center;
+    height: 60px;
+    width: 250px;
+    font-size: 20px;
+    margin-top: 40px;
+    margin-right: 100px;
+    vertical-align:middle;
+    border-radius: 20px;
+    border: 2px rgb(61, 56, 56) solid;
+    font-family: "Lucida Console", "Courier New", monospace
+}
+.delete{
+    text-align: center;
+}
+.internal-create-link{
+    text-decoration: none;
+    color:rgb(61, 56, 56);
+
+}
+.logo{
+    margin: -2rem 0rem 0rem 5rem;
+    height: 200px;
+    width: 200px;
+}
+.explanation{
+    text-align: center;
+    font-size: 25px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    margin-bottom: 30px; 
+    color: rgb(61, 56, 56);
+
+}

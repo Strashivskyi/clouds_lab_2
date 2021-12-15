@@ -1,8 +1,32 @@
 import { Link } from 'react-router-dom'
 import "./MachineList.css"
-import React from "react";
 import { Table} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react'
+import { API } from 'aws-amplify'
+
 function MachineList() {
+  const [textObj, setTextObj] = useState([]);
+  const fetchData = async () => {
+    try {
+      const data = await API.get('myapi', '/machine');
+      console.log(data)
+      setTextObj(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [
+    textObj
+  ]);
+  async function deleteObj(id) {
+    const del = await API.del('myapi', `/machine/${id}`)
+    console.log(del);
+  }
+  
+
+  
   return (
     <>
 <div className="header">
@@ -13,6 +37,7 @@ function MachineList() {
 <div className="explanation">
     ** Here is the list of vending machines where you can buy snacks **
 </div>
+
 <div className="row mb-4">
           <div className="col-sm-12 grid-margin">
             <div className="card h-100">
@@ -25,43 +50,26 @@ function MachineList() {
                       <th>GPS location</th>
                       <th>Menu</th>
                       <th>Available brands</th>
-                      <th>Number of available snacks</th>
-                      <th>Number of snacks sold today</th>
-                      <th className="delete">DELETE</th>
+                      <th>Available snacks</th>
+                      <th>Snacks sold today</th>
+                      <th>DELETE</th>
 
                     </tr>
                   </thead>
                   <tbody>
+                  {textObj.map((machine) => (
                     <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <th className="delete">❌</th>
+                      <td>{machine.name.S}</td>
+                      <td>{machine.address.S}</td>
+                      <td>{machine.gpslocation.S}</td>
+                      <td>{machine.menu.S}</td>
+                      <td>{machine.availablebrands.S}</td>
+                      <td>{machine.availablesnacks.S}</td>
+                      <td>{machine.snackssoldtoday.S}</td>
+                      <th className="delete" onClick={() => deleteObj(machine.id.S)}>❌</th>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <th className="delete">❌</th>
-                    </tr>
-                    <tr>
-                      <td>hn</td>
-                      <td>@twitter</td>
-                      <td>@twitter</td>
-                      <td>@twitter</td>
-                      <td>@twitter</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <th className="delete">❌</th>
-                    </tr>
+                    
+                    ))}
                   </tbody>
                 </Table>
               </div>

@@ -18,6 +18,9 @@ CORS(app)
 def list_machines():
     response = client.scan(TableName=TABLE)
     data = response['Items']
+    while response.get('LastEvaluatedKey'):
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response['Items'])
     return jsonify(data)
 
 
@@ -28,6 +31,11 @@ def create_machine():
         'id': {'S': str(uuid4())},
         'name': {'S': request_json.get('name')},
         'address': {'S': request_json.get('address')},
+        'gpslocation': {'S': request_json.get('gpslocation')},
+        'menu': {'S': request_json.get('menu')},
+        'availablebrands': {'S': request_json.get('availablebrands')},
+        'availablesnacks': {'S': request_json.get('availablesnacks')},
+        'snackssoldtoday': {'S': request_json.get('snackssoldtoday')},
     })
     return jsonify(message="item created")
 

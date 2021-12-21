@@ -15,7 +15,7 @@
       "function": {
         "machinefunction": {
           "deploymentBucketName": "amplify-myapp-dev-220515-deployment",
-          "s3Key": "amplify-builds/machinefunction-306a4c74593872705458-build.zip"
+          "s3Key": "amplify-builds/machinefunction-6f586f58564e554f6671-build.zip"
         }
       }
     }

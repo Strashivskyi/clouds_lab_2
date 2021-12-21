@@ -170,7 +170,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-220515-deployment/amplify-cfn-templates/function/machinefunction-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-myapp-dev-220515-deployment",
-          "s3Key": "amplify-builds/machinefunction-306a4c74593872705458-build.zip",
+          "s3Key": "amplify-builds/machinefunction-6f586f58564e554f6671-build.zip",
           "storagemydbName": {
             "Fn::GetAtt": [
               "storagemydb",

@@ -52,6 +52,9 @@ function MachineList() {
                       <th>Available brands</th>
                       <th>Available snacks</th>
                       <th>Snacks sold today</th>
+                      <th>sensorType</th>
+                      <th>sensorId</th>
+                      <th>timestamp</th>
                       <th>DELETE</th>
 
                     </tr>
@@ -66,6 +69,9 @@ function MachineList() {
                       <td>{machine.availablebrands.S}</td>
                       <td>{machine.availablesnacks.S}</td>
                       <td>{machine.snackssoldtoday.S}</td>
+                      <td>{machine.sensorType.S}</td>
+                      <td>{machine.sensorId.S}</td>
+                      <td>{machine.timestamp.S}</td>
                       <th className="delete" onClick={() => deleteObj(machine.id.S)}>❌</th>
                     </tr>
                     

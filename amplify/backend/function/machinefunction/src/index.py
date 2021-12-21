@@ -1,7 +1,6 @@
 import awsgi
 import boto3
 import os
-
 from flask_cors import CORS
 from flask import Flask, jsonify, request
 from uuid import uuid4
@@ -26,6 +25,8 @@ def list_machines():
 
 @app.route(BASE_ROUTE, methods=['POST'])
 def create_machine():
+    if request_json.get("API_KEY") != "standart_key":
+        return jsonify(message="Wrong API key")
     request_json = request.get_json()
     client.put_item(TableName=TABLE, Item={
         'id': {'S': str(uuid4())},
@@ -36,6 +37,10 @@ def create_machine():
         'availablebrands': {'S': request_json.get('availablebrands')},
         'availablesnacks': {'S': request_json.get('availablesnacks')},
         'snackssoldtoday': {'S': request_json.get('snackssoldtoday')},
+        'timestamp': {'S': request_json.get('timestamp')},
+        'sensorId': {'S': request_json.get('sensorId')},
+        'sensorType': {'S': request_json.get('sensorType')},
+        'API_KEY': {'S': request_json.get("API_KEY")}
     })
     return jsonify(message="item created")
 
@@ -58,24 +63,6 @@ def delete_machine(machine_id):
         }
     })
     return jsonify(message="machine deleted")
-
-
-@app.route(BASE_ROUTE + '/<machine_id>', methods=['PUT'])
-def update_song(machine_id):
-    client.update_item(
-        TableName=TABLE,
-        Key={'id': {'S': machine_id}},
-        UpdateExpression='SET #name = :name, #address = :address',
-        ExpressionAttributeNames={
-            '#name': 'name',
-            '#address': 'address'
-        },
-        ExpressionAttributeValues={
-            ':name': {'S': request.json['name']},
-            ':address': {'S': request.json['address']},
-        }
-    )
-    return jsonify(message="item updated")
 
 
 def handler(event, context):

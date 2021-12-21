@@ -2,21 +2,25 @@ import { Link } from 'react-router-dom'
 import React, {useState, useeffect, useEffect} from 'react';
 import './MachineList.css'
 import './AddMachine.css'
-import {Button, Form} from "react-bootstrap";
 import { API } from 'aws-amplify'
 
 
 
 const AddMachine = () => {
-  const [name, setName] = useState('');
-  const [gpslocation, setGpsLocation] = useState('');
-  const [availablebrands, setAvailableBrands] = useState('');
-  const [menu, setMenu] = useState('');
-  const [address, setAddress] = useState('');
-  const [availablesnacks, setAvailableSnacks] = useState('');
-  const [snackssoldtoday, setSnacksSoldToday] = useState('');
+  const [name, setName] = useState('some machine');
+  const [gpslocation, setGpsLocation] = useState('York, Pennsylvania, United States of America. Latitude: 39.962398 | Longitude: -76.727392');
+  const [availablebrands, setAvailableBrands] = useState('Nestle, Roshen');
+  const [menu, setMenu] = useState('chocolate bars, candy, wafels');
+  const [address, setAddress] = useState('York, PA');
+  const [availablesnacks, setAvailableSnacks] = useState('1200');
+  const [snackssoldtoday, setSnacksSoldToday] = useState('96');
+  const [sensorId, setSensorId] = useState("dsf");
+  const [sensorType, setSensorType ]= useState("fdsf");
+  const [timestamp, setTimestamp ]= useState("fdsf");
+  const [apiKey, setApiKey]= useState("standart_key")
 
-  async function SaveMachine(name, gpslocation, availablebrands, menu,address, availablesnacks, snackssoldtoday) {
+
+  async function SaveMachine(name, gpslocation, availablebrands, menu,address, availablesnacks, snackssoldtoday, sensorId, sensorType, timestamp, apiKey) {
 
     const data = await API.post('myapi', '/machine', {
         body: {
@@ -26,7 +30,11 @@ const AddMachine = () => {
             menu: menu, 
             address: address, 
             availablesnacks: availablesnacks, 
-            snackssoldtoday: snackssoldtoday
+            snackssoldtoday: snackssoldtoday,
+            sensorId: sensorId, 
+            sensorType: sensorType, 
+            timestamp: timestamp, 
+            API_KEY: apiKey
         }
     })
 
@@ -95,8 +103,36 @@ const AddMachine = () => {
         className="form-control inputs"
         id="menu"
       />
+      <label htmlFor="sensorId" className="input-names">Enter sensor id:</label>
+      <input
+        onChange={(e) => setSensorId(e.target.value)}
+        type="text"
+        className="form-control inputs"
+        id="sensorId"
+      />
+      <label htmlFor="sensorType" className="input-names">Enter sensor type:</label>
+      <input
+        onChange={(e) => setSensorType(e.target.value)}
+        type="text"
+        className="form-control inputs"
+        id="sensorType"
+      />
+      <label htmlFor="timestamp" className="input-names">Enter timestamp:</label>
+      <input
+        onChange={(e) => setTimestamp(e.target.value)}
+        type="text"
+        className="form-control inputs"
+        id="timestamp"
+      />
+      <label htmlFor="secretKey" className="input-names">Enter secret key:</label>
+      <input
+        onChange={(e) => setApiKey(e.target.value)}
+        type="text"
+        className="form-control inputs"
+        id="secretKey"
+      />
 <h2 className="create-link center" >
-      <Link className="internal-create-link" to="/" onClick={() => SaveMachine(name, gpslocation, availablebrands, menu,address, availablesnacks, snackssoldtoday)}>Save</Link></h2>
+      <Link className="internal-create-link" to="/" onClick={() => SaveMachine(name, gpslocation, availablebrands, menu,address, availablesnacks, snackssoldtoday, sensorId, sensorType, timestamp, apiKey)}>Save</Link></h2>
 
     </div>
 

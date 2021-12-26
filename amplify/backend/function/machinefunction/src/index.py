@@ -4,7 +4,6 @@ import os
 from flask_cors import CORS
 from flask import Flask, jsonify, request
 from uuid import uuid4
-client = boto3.client("dynamodb")
 os.environ['AWS_DEFAULT_REGION'] = 'eu-central-1'
 BASE_ROUTE = "/machine"
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")

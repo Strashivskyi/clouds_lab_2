@@ -1,0 +1,27 @@
+version: '3'
+services:
+  pythonback:
+    hostname: pythonback
+    image: dokeydokey666/pythonback
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_REGION=eu-central-1
+      - STORAGE_MYDB_NAME=machine-dev
+    build:
+      dockerfile: ./pythonback/Dockerfile
+    deploy:
+      x-aws-autoscaling: 
+        cpu: 25
+        max: 3
+    ports:
+      - 5000:5000
+  ui:
+    hostname: ui
+    depends_on: 
+      - pythonback
+    image: dokeydokey666/ui
+    build:
+      dockerfile: ./ui/Dockerfile
+    ports:
+      - 80:80

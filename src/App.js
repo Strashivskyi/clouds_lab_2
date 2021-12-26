@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { API } from 'aws-amplify';
 import "./styles.css";
 import './App.css';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'  

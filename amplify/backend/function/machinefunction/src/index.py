@@ -7,10 +7,13 @@ from uuid import uuid4
 client = boto3.client("dynamodb")
 os.environ['AWS_DEFAULT_REGION'] = 'eu-central-1'
 BASE_ROUTE = "/machine"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+client = boto3.client("dynamodb", region_name='eu-central-1', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 TABLE = os.environ.get("STORAGE_MYDB_NAME")
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
 
 
 @app.route(BASE_ROUTE, methods=['GET'])
@@ -87,3 +90,5 @@ def update_song(machine_id):
 
 def handler(event, context):
     return awsgi.response(app, event, context)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')

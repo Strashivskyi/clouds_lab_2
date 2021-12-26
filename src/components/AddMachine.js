@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom'
 import React, {useState, useeffect, useEffect} from 'react';
 import './MachineList.css'
 import './AddMachine.css'
-import { API } from 'aws-amplify'
-
+import axios from "axios";
 
 
 const AddMachine = () => {
@@ -21,23 +20,21 @@ const AddMachine = () => {
 
 
   async function SaveMachine(name, gpslocation, availablebrands, menu,address, availablesnacks, snackssoldtoday, sensorId, sensorType, timestamp, apiKey) {
-
-    const data = await API.post('myapi', '/machine', {
-        body: {
-            name: name,
-            gpslocation: gpslocation,
-            availablebrands: availablebrands, 
-            menu: menu, 
-            address: address, 
-            availablesnacks: availablesnacks, 
-            snackssoldtoday: snackssoldtoday,
-            sensorId: sensorId, 
-            sensorType: sensorType, 
-            timestamp: timestamp, 
-            API_KEY: apiKey
-        }
-    })
-
+    const body = {
+      name: name,
+      gpslocation: gpslocation,
+      availablebrands: availablebrands, 
+      menu: menu, 
+      address: address, 
+      availablesnacks: availablesnacks, 
+      snackssoldtoday: snackssoldtoday,
+      sensorId: sensorId, 
+      sensorType: sensorType, 
+      timestamp: timestamp, 
+      API_KEY: apiKey
+  };
+  const data = await axios.post(`http://www.iotctlab1.xyz/api/`, {body})
+  
     console.log(data)
 
 }

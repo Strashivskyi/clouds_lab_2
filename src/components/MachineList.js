@@ -2,15 +2,19 @@ import { Link } from 'react-router-dom'
 import "./MachineList.css"
 import { Table} from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
-import { API } from 'aws-amplify'
+import axios from "axios";
 
 function MachineList() {
   const [textObj, setTextObj] = useState([]);
   const fetchData = async () => {
     try {
-      const data = await API.get('myapi', '/machine');
-      console.log(data)
-      setTextObj(data);
+      // const data = await API.get('myapi', '/machine');
+      // console.log(data)
+      // setTextObj(data);
+      axios.get('http://iotctlab1.xyz:5000/machine').then(res => {
+        const data = res.data;
+        setTextObj(data);})
+
     } catch (error) {
       console.log(error);
     }
@@ -21,7 +25,8 @@ function MachineList() {
     textObj
   ]);
   async function deleteObj(id) {
-    const del = await API.del('myapi', `/machine/${id}`)
+    const del = await axios.delete(`http://iotctlab1.xyz:5000/machine/${id}`)
+    // API.del('myapi', `/machine/${id}`)
     console.log(del);
   }
   
